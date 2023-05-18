@@ -17,7 +17,7 @@ pipeline {
             }
       steps{
           sshagent(credentials : ['test-server']) {
-            sh 'ssh -o StrictHostKeyChecking=no ubuntu@$params.IP uptime'
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@${params.IP} uptime'
           }
        }
     }
