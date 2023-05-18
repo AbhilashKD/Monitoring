@@ -10,7 +10,7 @@ pipeline {
                 sh 'echo "Hello script is about run"'
             }
         }
-    }
+    
     stage ('Deploy') {
 	when {
                 expression { return params.REMOTE }
@@ -18,7 +18,8 @@ pipeline {
       steps{
           sshagent(credentials : ['test-server']) {
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@$params.IP uptime'
-        }
+          }
+       }
     }
   }
 }
