@@ -17,7 +17,14 @@ pipeline {
             }
       steps{
           sshagent(credentials : ['test-server']) {
-            sh 'ssh -o StrictHostKeyChecking=no ubuntu@${params.IP} uptime'
+            sh "ssh -o StrictHostKeyChecking=no ubuntu@'${params.IP}'  mkdir test"
+            sh "scp ${WORKSPACE}/docker-compose.yml  ubuntu@'${params.IP}':/home/ubuntu/test "
+            sh "scp ${WORKSPACE}/config.yml  ubuntu@'${params.IP}':/home/ubuntu/test"
+            sh "scp ${WORKSPACE}/prometheus.yml  ubuntu@'${params.IP}':/home/ubuntu/test"
+            sh "scp ${WORKSPACE}/config.monitoring  ubuntu@'${params.IP}':/home/ubuntu/test "
+            sh "scp ${WORKSPACE}/script.sh  ubuntu@'${params.IP}':/home/ubuntu/test"
+            sh "ssh -o StrictHostKeyChecking=no ubuntu@'${params.IP}' chmod +x /home/ubuntu/test/script.sh"
+            sh "ssh -o StrictHostKeyChecking=no ubuntu@'${params.IP}' 'cd /home/ubuntu/test && sh script.sh'"
           }
        }
     }
