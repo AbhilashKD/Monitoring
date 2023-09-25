@@ -17,7 +17,7 @@ pipeline {
             }
       steps{
           sshagent(credentials : ['test-server']) {
-            sh "ssh -o StrictHostKeyChecking=no ubuntu@'${params.IP}'  mkdir test"
+            sh "ssh -o StrictHostKeyChecking=no ubuntu@'${params.IP}'  mkdir -p /home/ubuntu/test"
             sh "scp ${WORKSPACE}/docker-compose.yml  ubuntu@'${params.IP}':/home/ubuntu/test "
             sh "scp ${WORKSPACE}/config.yml  ubuntu@'${params.IP}':/home/ubuntu/test"
             sh "scp ${WORKSPACE}/prometheus.yml  ubuntu@'${params.IP}':/home/ubuntu/test"
